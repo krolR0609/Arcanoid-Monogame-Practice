@@ -25,7 +25,6 @@ namespace Pong
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
         }
 
         /// <summary>
@@ -36,7 +35,6 @@ namespace Pong
         /// </summary>
         protected override void Initialize()
         {
-            
             player = new Player(new Texture2D(GraphicsDevice, 200, 20, false, SurfaceFormat.Single));
             // TODO: Add your initialization logic here
             ball = new Ball(new Texture2D(GraphicsDevice, 10, 10, false, SurfaceFormat.Single));

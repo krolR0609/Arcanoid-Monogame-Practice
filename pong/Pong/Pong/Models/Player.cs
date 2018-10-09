@@ -42,8 +42,6 @@ namespace Pong.Models
             base.Draw(spriteBatch);
         }
 
-        
-
         public void Control(KeyboardState state)
         {
             if (state.IsKeyDown(Keys.Right))
