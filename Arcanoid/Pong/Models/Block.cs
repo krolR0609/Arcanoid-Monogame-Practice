@@ -9,10 +9,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Pong.Models
 {
-    public class Block : Ball
+    public class Block : Sprite
     {
         public int HitCount;
 
+        public override string SpriteName { get => "SpaceBlock"; }
         public Block(Texture2D texture2D) : base(texture2D)
         {
             HitCount = 0;
@@ -20,11 +21,30 @@ namespace Pong.Models
 
             this.OnCollision += OnTriggered;
         }
-        public override void Draw(SpriteBatch spriteBatch)
+        public override Rectangle Rectangle
         {
-            base.Draw(spriteBatch);
+            get
+            {
+                return new Rectangle((int)Position.X, (int)Position.Y, 64, 32);
+            }
         }
 
+        public virtual Rectangle DrawRect
+        {
+            get
+            {
+                return new Rectangle(0, 0, 64, 64);
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (IsEnabled)
+            {
+                spriteBatch.Draw(texture, Rectangle, DrawRect, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
+        }
+            
         public void OnTriggered(object obj, Sprite sprite)
         {
             IsEnabled = false;
@@ -32,6 +52,7 @@ namespace Pong.Models
         }
         public override void Update(GameTime gameTime)
         {
+
         }
     }
 }

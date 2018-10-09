@@ -21,6 +21,8 @@ namespace Pong
         List<Block> blocks = new List<Block>();
         Player player;
 
+        private Texture2D blockTexture;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -40,7 +42,11 @@ namespace Pong
             ball = new Ball(new Texture2D(GraphicsDevice, 10, 10, false, SurfaceFormat.Single));
 
             var bText = new Texture2D(GraphicsDevice, 200, 50, false, SurfaceFormat.Single);
+            blockTexture = Content.Load<Texture2D>("SpaceBlock");
+            bText = blockTexture; 
+
             var blok1 = new Block(bText);
+
             blok1.Position.X = 100;
             blok1.Position.Y = 100;
 
@@ -71,6 +77,7 @@ namespace Pong
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             DebugFont = Content.Load<SpriteFont>("DebugFont");
+            
         }
 
         protected override void UnloadContent()
@@ -84,7 +91,6 @@ namespace Pong
                 Exit();
             player.Control(Keyboard.GetState());
             player.Update(gameTime);
-
             //ball.Control(Keyboard.GetState());
             ball.Update(gameTime);
 
@@ -111,10 +117,9 @@ namespace Pong
                 b.Draw(spriteBatch);
             }
 #if DEBUG
-            foreach(var sprite in Sprites)
+            for (int i = 0; i < Sprites.Count; i++)
             {
-                spriteBatch.DrawString(DebugFont, sprite.DebugString, new Vector2(10, 10), Color.Red);
-
+                spriteBatch.DrawString(DebugFont, Sprites[i].DebugString, new Vector2(10, 15 * (i + 1)), Color.Red);
             }
 #endif
             spriteBatch.End();

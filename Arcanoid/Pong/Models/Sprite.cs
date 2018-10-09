@@ -15,16 +15,18 @@ namespace Pong.Models
 
         public virtual string DebugString { get { return ""; } }
 
+        public virtual string SpriteName { get; }
+
         public Vector2 Position;
         public Vector2 Velocity;
-        public Rectangle Rectangle
+
+        public virtual Rectangle Rectangle
         {
             get
             {
                 return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
             }
         }
-
         public bool IsEnabled;
 
         public EventHandler<Sprite> OnCollision;
