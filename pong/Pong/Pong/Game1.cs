@@ -6,9 +6,6 @@ using System.Collections.Generic;
 
 namespace Pong
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -16,7 +13,9 @@ namespace Pong
 
         public static int ScreenWidth;
         public static int ScreenHeight;
+        public SpriteFont DebugFont;
 
+        public List<Sprite> Sprites = new List<Sprite>();
 
         Ball ball;
         List<Block> blocks = new List<Block>();
@@ -37,8 +36,8 @@ namespace Pong
         /// </summary>
         protected override void Initialize()
         {
-            SpriteFont debugFont = Content.Load<SpriteFont>("DebugFont");
-            player = new Player(new Texture2D(GraphicsDevice, 250, 100, false, SurfaceFormat.Single), debugFont);
+            
+            player = new Player(new Texture2D(GraphicsDevice, 200, 20, false, SurfaceFormat.Single));
             // TODO: Add your initialization logic here
             ball = new Ball(new Texture2D(GraphicsDevice, 10, 10, false, SurfaceFormat.Single));
 
@@ -61,6 +60,11 @@ namespace Pong
             ScreenWidth = graphics.PreferredBackBufferWidth;
             ScreenHeight = graphics.PreferredBackBufferHeight;
 
+            Sprites.Add(player);
+            Sprites.Add(ball);
+            Sprites.Add(blok1);
+            Sprites.Add(blok2);
+
             base.Initialize();
         }
 
@@ -68,6 +72,7 @@ namespace Pong
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            DebugFont = Content.Load<SpriteFont>("DebugFont");
         }
 
         protected override void UnloadContent()
@@ -92,7 +97,6 @@ namespace Pong
 
             base.Update(gameTime);
         }
-
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -108,9 +112,15 @@ namespace Pong
             {
                 b.Draw(spriteBatch);
             }
+#if DEBUG
+            foreach(var sprite in Sprites)
+            {
+                spriteBatch.DrawString(DebugFont, sprite.DebugString, new Vector2(10, 10), Color.Red);
+
+            }
+#endif
             spriteBatch.End();
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }

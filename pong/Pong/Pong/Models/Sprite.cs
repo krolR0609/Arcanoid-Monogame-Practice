@@ -13,6 +13,8 @@ namespace Pong.Models
     {
         protected Texture2D texture;
 
+        public virtual string DebugString { get { return ""; } }
+
         public Vector2 Position;
         public Vector2 Velocity;
         public Rectangle Rectangle
@@ -46,6 +48,7 @@ namespace Pong.Models
             }
             spriteBatch.Draw(texture, Position, Color.White);
         }
+
         protected bool IsTouchingLeft(Sprite sprite)
         {
             return this.Rectangle.Right + this.Velocity.X > sprite.Rectangle.Left &&
