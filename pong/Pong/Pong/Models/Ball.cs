@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Pong.Models
 {
-   
+
     public class Ball : Sprite
     {
         private float ballSpeed;
@@ -18,7 +18,7 @@ namespace Pong.Models
 
         public bool isPlaying = true;
 
-        public Ball(Texture2D texture, float ballSpeed = 10f):base(texture)
+        public Ball(Texture2D texture, float ballSpeed = 10f) : base(texture)
         {
             this.ballSpeed = ballSpeed;
             this.sprites = new List<Sprite>();
@@ -116,7 +116,7 @@ namespace Pong.Models
         }
         public void Restart()
         {
-            
+
         }
     }
 }
