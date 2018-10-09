@@ -11,27 +11,26 @@ namespace Pong.Models
 {
     public class Sprite
     {
-        protected Texture2D _texture;
+        protected Texture2D texture;
 
         public Vector2 Position;
         public Vector2 Velocity;
-
-        public bool Visible;
-
         public Rectangle Rectangle
         {
             get
             {
-                return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height);
+                return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
             }
         }
+
+        public bool IsEnabled;
 
         public EventHandler<Sprite> OnCollision;
 
         public Sprite(Texture2D texture)
         {
-            _texture = texture;
-            Visible = true;
+            this.texture = texture;
+            IsEnabled = true;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -41,11 +40,11 @@ namespace Pong.Models
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if (!Visible)
+            if (!IsEnabled)
             {
                 return;
             }
-            spriteBatch.Draw(_texture, Position, Color.White);
+            spriteBatch.Draw(texture, Position, Color.White);
         }
         protected bool IsTouchingLeft(Sprite sprite)
         {

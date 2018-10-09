@@ -27,7 +27,7 @@ namespace Pong.Models
 
         public void OnTriggered(object obj, Sprite sprite)
         {
-            Visible = false;
+            IsEnabled = false;
             HitCount++;
         }
         public override void Update(GameTime gameTime)

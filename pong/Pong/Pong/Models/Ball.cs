@@ -14,7 +14,7 @@ namespace Pong.Models
         private float ballSpeed;
         private List<Sprite> _spritesCollisions;
 
-        public bool isPlaying = true;
+        public bool IsPlaying = true;
 
         public Ball(Texture2D texture, float ballSpeed = 10f) : base(texture)
         {
@@ -23,9 +23,13 @@ namespace Pong.Models
             Init();
         }
 
+        public void AddSprite(Sprite sprite)
+        {
+            _spritesCollisions.Add(sprite);
+        }
         public override void Update(GameTime gameTime)
         {
-            if (!isPlaying)
+            if (!IsPlaying)
             {
                 return;
             }
@@ -40,7 +44,7 @@ namespace Pong.Models
         {
             foreach (var sprite in _spritesCollisions)
             {
-                if (sprite == this || !sprite.Visible)
+                if (sprite == this || !sprite.IsEnabled)
                     continue;
 
                 if (this.Velocity.X > 0 && this.IsTouchingLeft(sprite))
@@ -76,7 +80,7 @@ namespace Pong.Models
             {
                 Velocity.Y = -Velocity.Y;
             }
-            if (Position.Y < y0 || Position.Y + _texture.Height >= y1)
+            if (Position.Y < y0 || Position.Y + texture.Height >= y1)
             {
                 Velocity.Y = -Velocity.Y;
             }
@@ -85,11 +89,12 @@ namespace Pong.Models
                 Velocity.X = -Velocity.X;
             }
         }
+
         public void Control(KeyboardState state)
         {
             if (state.IsKeyDown(Keys.Space))
             {
-                isPlaying = !isPlaying;
+                IsPlaying = !IsPlaying;
             }
             if (state.IsKeyDown(Keys.Up))
             {
@@ -114,6 +119,5 @@ namespace Pong.Models
             this.Position = new Vector2(0, 0); //start postion
             this.Velocity = new Vector2(1, 1); //start angle
         }
-
     }
 }

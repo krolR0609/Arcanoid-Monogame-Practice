@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pong.Models;
-using Pong.Models.Builder;
 using System.Collections.Generic;
 
 namespace Pong
@@ -53,9 +52,9 @@ namespace Pong
             blocks.Add(blok1);
             blocks.Add(blok2);
 
-            ball._spritesCollisions.Add(blok1);
-            ball._spritesCollisions.Add(blok2);
-            ball._spritesCollisions.Add(player);
+            ball.AddSprite(blok1);
+            ball.AddSprite(blok2);
+            ball.AddSprite(player);
 
             ScreenWidth = graphics.PreferredBackBufferWidth;
             ScreenHeight = graphics.PreferredBackBufferHeight;
