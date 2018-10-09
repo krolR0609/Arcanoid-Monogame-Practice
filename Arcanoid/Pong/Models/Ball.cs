@@ -16,7 +16,7 @@ namespace Pong.Models
 
         public bool IsPlaying = true;
 
-        public Ball(Texture2D texture, float ballSpeed = 10f) : base(texture)
+        public Ball(float ballSpeed = 10f) : base()
         {
             this.ballSpeed = ballSpeed;
             this._spritesCollisions = new List<Sprite>();

@@ -12,29 +12,45 @@ namespace Pong.Models
     public class Block : Sprite
     {
         public int HitCount;
+        private Rectangle _rectangle;
 
-        public override string SpriteName { get => "SpaceBlock"; }
-        public Block(Texture2D texture2D) : base(texture2D)
-        {
-            HitCount = 0;
-            Position = new Vector2(400, 400);
-
-            this.OnCollision += OnTriggered;
-        }
         public override Rectangle Rectangle
         {
             get
             {
-                return new Rectangle((int)Position.X, (int)Position.Y, 64, 32);
+                return _rectangle;
             }
         }
-
         public virtual Rectangle DrawRect
         {
             get
             {
                 return new Rectangle(0, 0, 64, 64);
             }
+        }
+
+        public Block(int x, int y, int width, int height): this()
+        {
+            _rectangle = new Rectangle(x, y, width, height);
+        }
+
+        public Block(int x, int y) : this()
+        {
+            Position = new Vector2(x, y);
+        }
+
+        public Block() : base()
+        {
+            HitCount = 0;
+            Position = new Vector2(400, 400);
+
+            _rectangle = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
+            this.OnCollision += OnTriggered;
+        }
+
+        public override void LoadTexture(Texture2D texture)
+        {
+            this.texture = texture;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -50,9 +66,9 @@ namespace Pong.Models
             IsEnabled = false;
             HitCount++;
         }
+
         public override void Update(GameTime gameTime)
         {
-
         }
     }
 }

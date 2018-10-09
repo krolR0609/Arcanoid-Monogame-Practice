@@ -19,7 +19,7 @@ namespace Pong.Models
             }
         }
 
-        public Player(Texture2D texture2D) : base(texture2D)
+        public Player() : base()
         {
             this.Position.Y = 450;
             this.Position.X = Game1.ScreenWidth / 2;

@@ -14,7 +14,6 @@ namespace Pong.Models
         protected Texture2D texture;
 
         public virtual string DebugString { get { return ""; } }
-
         public virtual string SpriteName { get; }
 
         public Vector2 Position;
@@ -31,15 +30,18 @@ namespace Pong.Models
 
         public EventHandler<Sprite> OnCollision;
 
-        public Sprite(Texture2D texture)
+        public Sprite()
+        {
+            IsEnabled = true;
+        }
+
+        public virtual void LoadTexture(Texture2D texture)
         {
             this.texture = texture;
-            IsEnabled = true;
         }
 
         public virtual void Update(GameTime gameTime)
         {
-
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
