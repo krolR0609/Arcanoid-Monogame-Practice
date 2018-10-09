@@ -53,9 +53,9 @@ namespace Pong
             blocks.Add(blok1);
             blocks.Add(blok2);
 
-            ball.sprites.Add(blok1);
-            ball.sprites.Add(blok2);
-            ball.sprites.Add(player);
+            ball._spritesCollisions.Add(blok1);
+            ball._spritesCollisions.Add(blok2);
+            ball._spritesCollisions.Add(player);
 
             ScreenWidth = graphics.PreferredBackBufferWidth;
             ScreenHeight = graphics.PreferredBackBufferHeight;
