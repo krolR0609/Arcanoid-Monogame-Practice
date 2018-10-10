@@ -18,8 +18,6 @@ namespace Pong.Models
 
         protected Texture2D texture;
 
-        public virtual string DebugString { get { return ""; } }
-        public virtual string SpriteName { get; }
         public virtual Rectangle Rectangle
         {
             get
@@ -39,11 +37,9 @@ namespace Pong.Models
         {
             this.texture = texture;
         }
-
         public virtual void Update(GameTime gameTime)
         {
         }
-
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (!IsEnabled)
@@ -60,7 +56,6 @@ namespace Pong.Models
               this.Rectangle.Bottom > sprite.Rectangle.Top &&
               this.Rectangle.Top < sprite.Rectangle.Bottom;
         }
-
         protected bool IsTouchingRight(Sprite sprite)
         {
             return this.Rectangle.Left + this.Velocity.X < sprite.Rectangle.Right &&
@@ -68,7 +63,6 @@ namespace Pong.Models
               this.Rectangle.Bottom > sprite.Rectangle.Top &&
               this.Rectangle.Top < sprite.Rectangle.Bottom;
         }
-
         protected bool IsTouchingTop(Sprite sprite)
         {
             return this.Rectangle.Bottom + this.Velocity.Y > sprite.Rectangle.Top &&
@@ -76,7 +70,6 @@ namespace Pong.Models
               this.Rectangle.Right > sprite.Rectangle.Left &&
               this.Rectangle.Left < sprite.Rectangle.Right;
         }
-
         protected bool IsTouchingBottom(Sprite sprite)
         {
             return this.Rectangle.Top + this.Velocity.Y < sprite.Rectangle.Bottom &&

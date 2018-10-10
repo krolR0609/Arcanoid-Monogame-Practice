@@ -11,7 +11,7 @@ namespace Pong.Models
 {
     public class Ball : Sprite
     {
-        public Ball(float ballSpeed = 10f) : base()
+        public Ball(float ballSpeed = 12f) : base()
         {
             this.ballSpeed = ballSpeed;
             this._spritesCollisions = new List<Sprite>();
@@ -65,7 +65,7 @@ namespace Pong.Models
 
         private void Init()
         {
-            this.Position = new Vector2(0, 0); //start postion
+            this.Position = new Vector2(300, 350 ); //start postion
             this.Velocity = new Vector2(1, 1); //start angle
         }
         private void CheckSpriteColissions()

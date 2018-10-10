@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pong.App_Data;
 using Pong.Models;
 using Pong.Models.Loaders;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Pong
 {
@@ -15,26 +15,23 @@ namespace Pong
 
         public static int ScreenWidth;
         public static int ScreenHeight;
-        public SpriteFont DebugFont;
 
-        private GameManager gameManager;
-
-        public List<Sprite> Sprites = new List<Sprite>();
-        Ball ball;
-        List<Block> blocks = new List<Block>();
-        Player player;
+        List<Block> Blocks;
+        Ball Ball;
+        Player Player;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            Blocks = new List<Block>();
         }
 
         protected override void Initialize()
         {
-            player = new Player();
-            ball = new Ball();
-            blocks = BlockLoader.CreateBlocks(10, 5, 64);
+            Player = new Player();
+            Ball = new Ball(4f);
+            Blocks = BlockLoader.CreateBlocks(24, 6, 40);
 
             ScreenWidth = graphics.PreferredBackBufferWidth;
             ScreenHeight = graphics.PreferredBackBufferHeight;
@@ -44,19 +41,18 @@ namespace Pong
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            gameManager = new GameManager(graphics, spriteBatch, Content);
 
-            player.LoadTexture(new Texture2D(GraphicsDevice, 100, 20, false, SurfaceFormat.Single));
-            ball.LoadTexture(new Texture2D(GraphicsDevice, 10, 10, false, SurfaceFormat.Single));
+            Player.LoadTexture(new Texture2D(GraphicsDevice, 100, 20, false, SurfaceFormat.Single));
+            Ball.LoadTexture(new Texture2D(GraphicsDevice, 10, 10, false, SurfaceFormat.Single));
 
-            blocks.ForEach(b => b.LoadTexture(new Texture2D(GraphicsDevice, 200, 20, false, SurfaceFormat.Single)));
-            blocks.ForEach(b => ball.AddSprite(b));
-            ball.AddSprite(player);
+            Blocks.ForEach(b => b.LoadTexture(new Texture2D(GraphicsDevice, 200, 20, false, SurfaceFormat.Single)));
+            Blocks.ForEach(b => Ball.AddSprite(b));
+            Ball.AddSprite(Player);
+
         }
 
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -64,40 +60,41 @@ namespace Pong
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            gameManager.Update(gameTime); 
-
-            player.Control(Keyboard.GetState());
-            player.Update(gameTime);
-            ball.Update(gameTime);
-
-            foreach (var b in blocks)
+            Player.Control(Keyboard.GetState());
+            Player.Update();
+            Ball.Update(gameTime);
+            
+            foreach (var b in Blocks)
             {
-                b.Update(gameTime);
+                if (b.IsEnabled)
+                {
+                    b.Update(gameTime);
+                }
             }
 
+            if(Ball.Position.Y + Ball.Rectangle.Height >= 480)
+            {
+                OnGameEnd();
+            }
             base.Update(gameTime);
         }
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
+        private void OnGameEnd()
+        {
+            Initialize();
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
-            ball.Draw(spriteBatch);
-            foreach (var b in blocks)
+            Player.Draw(spriteBatch);
+            Ball.Draw(spriteBatch);
+            foreach (var b in Blocks)
             {
                 b.Draw(spriteBatch);
             }
-            //#if DEBUG
-            //            for (int i = 0; i < Sprites.Count; i++)
-            //            {
-            //                spriteBatch.DrawString(DebugFont, Sprites[i].DebugString, new Vector2(10, 15 * (i + 1)), Color.Red);
-            //            }
-            //#endif
             spriteBatch.End();
             // TODO: Add your drawing code here
             base.Draw(gameTime);

@@ -44,7 +44,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App_Data\GameManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Models\Ball.cs" />
     <Compile Include="Models\Block.cs" />

@@ -17,14 +17,6 @@ namespace Pong.Models
         private float _speed = 10f;
         private float _velocity = 1.2f;
 
-        public override string DebugString 
-        {
-            get
-            {
-                return $"x:{this.Position.X}, y:{this.Position.Y} \n";
-            }
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (this.Position.X < 0)
@@ -37,6 +29,17 @@ namespace Pong.Models
             }
         }
 
+        public void Update()
+        {
+            if (this.Position.X < 0)
+            {
+                this.Position.X = 0;
+            }
+            if (this.Position.X + this.texture.Width > Game1.ScreenWidth)
+            {
+                this.Position.X = Game1.ScreenWidth - this.texture.Width;
+            }
+        }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
