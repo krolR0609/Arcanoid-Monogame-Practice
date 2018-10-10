@@ -11,16 +11,28 @@ namespace Pong.Models
 {
     public class Block : Sprite
     {
-        public int HitCount;
+        public Block(int x, int y, int width, int height) : this()
+        {
+            _rectangle = new Rectangle(x, y, width, height);
+        }
+        public Block(int x, int y) : this()
+        {
+            Position = new Vector2(x, y);
+        }
+        public Block() : base()
+        {
+            HitCount = 0;
+            Position = new Vector2(400, 400);
+
+            _rectangle = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
+
+            this.OnCollision += OnTriggered;
+        }
+
         private Rectangle _rectangle;
 
-        public override Rectangle Rectangle
-        {
-            get
-            {
-                return _rectangle;
-            }
-        }
+        public int HitCount;
+
         public virtual Rectangle DrawRect
         {
             get
@@ -28,39 +40,14 @@ namespace Pong.Models
                 return new Rectangle(0, 0, 64, 64);
             }
         }
-
-        public Block(int x, int y, int width, int height): this()
+        public override Rectangle Rectangle
         {
-            _rectangle = new Rectangle(x, y, width, height);
-        }
-
-        public Block(int x, int y) : this()
-        {
-            Position = new Vector2(x, y);
-        }
-
-        public Block() : base()
-        {
-            HitCount = 0;
-            Position = new Vector2(400, 400);
-
-            _rectangle = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
-            this.OnCollision += OnTriggered;
-        }
-
-        public override void LoadTexture(Texture2D texture)
-        {
-            this.texture = texture;
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (IsEnabled)
+            get
             {
-                spriteBatch.Draw(texture, Rectangle, DrawRect, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
+                return _rectangle;
             }
         }
-            
+
         public void OnTriggered(object obj, Sprite sprite)
         {
             IsEnabled = false;
@@ -69,6 +56,17 @@ namespace Pong.Models
 
         public override void Update(GameTime gameTime)
         {
+        }
+        public override void LoadTexture(Texture2D texture)
+        {
+            this.texture = texture;
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (IsEnabled)
+            {
+                spriteBatch.Draw(texture, Rectangle, DrawRect, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
         }
     }
 }

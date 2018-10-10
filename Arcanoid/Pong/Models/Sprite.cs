@@ -11,14 +11,15 @@ namespace Pong.Models
 {
     public class Sprite
     {
+        public Sprite()
+        {
+            IsEnabled = true;
+        }
+
         protected Texture2D texture;
 
         public virtual string DebugString { get { return ""; } }
         public virtual string SpriteName { get; }
-
-        public Vector2 Position;
-        public Vector2 Velocity;
-
         public virtual Rectangle Rectangle
         {
             get
@@ -26,14 +27,13 @@ namespace Pong.Models
                 return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
             }
         }
+
         public bool IsEnabled;
 
-        public EventHandler<Sprite> OnCollision;
+        public Vector2 Position;
+        public Vector2 Velocity;
 
-        public Sprite()
-        {
-            IsEnabled = true;
-        }
+        public EventHandler<Sprite> OnCollision;
 
         public virtual void LoadTexture(Texture2D texture)
         {

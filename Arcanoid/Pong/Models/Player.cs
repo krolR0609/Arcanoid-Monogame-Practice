@@ -8,6 +8,12 @@ namespace Pong.Models
 {
     public class Player : Sprite
     {
+        public Player() : base()
+        {
+            this.Position.Y = 450;
+            this.Position.X = Game1.ScreenWidth / 2;
+        }
+
         private float _speed = 10f;
         private float _velocity = 1.2f;
 
@@ -17,12 +23,6 @@ namespace Pong.Models
             {
                 return $"x:{this.Position.X}, y:{this.Position.Y} \n";
             }
-        }
-
-        public Player() : base()
-        {
-            this.Position.Y = 450;
-            this.Position.X = Game1.ScreenWidth / 2;
         }
 
         public override void Update(GameTime gameTime)

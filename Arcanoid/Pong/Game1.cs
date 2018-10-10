@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pong.App_Data;
 using Pong.Models;
 using Pong.Models.Loaders;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace Pong
         public static int ScreenWidth;
         public static int ScreenHeight;
         public SpriteFont DebugFont;
+
+        private GameManager gameManager;
+
         public List<Sprite> Sprites = new List<Sprite>();
         Ball ball;
         List<Block> blocks = new List<Block>();
         Player player;
-        private Texture2D blockTexture;
 
         public Game1()
         {
@@ -31,40 +34,24 @@ namespace Pong
         {
             player = new Player();
             ball = new Ball();
-
-            var bText = new Texture2D(GraphicsDevice, 200, 50, false, SurfaceFormat.Single);
-            blockTexture = Content.Load<Texture2D>("SpaceBlock");
-            bText = blockTexture;
-
-            var blok1 = new Block(100, 100, 30, 30);
-            var blok2 = new Block(500, 50, 60, 45);
-
-            blocks = BlockLoader.CreateBlocks(30, 16);
-            blocks.ForEach(b => b.LoadTexture(new Texture2D(GraphicsDevice, 200, 20, false, SurfaceFormat.Single)));
-            blocks.ForEach(b => ball.AddSprite(b));
-            //ball.AddSprite(blok1);
-            //ball.AddSprite(blok2);
-
-            ball.AddSprite(player);
+            blocks = BlockLoader.CreateBlocks(10, 5, 64);
 
             ScreenWidth = graphics.PreferredBackBufferWidth;
             ScreenHeight = graphics.PreferredBackBufferHeight;
-
-            Sprites.Add(player);
-            Sprites.Add(ball);
-            //Sprites.Add(blok1);
-            //Sprites.Add(blok2);
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            DebugFont = Content.Load<SpriteFont>("DebugFont");
+            gameManager = new GameManager(graphics, spriteBatch, Content);
 
-            player.LoadTexture(new Texture2D(GraphicsDevice, 200, 20, false, SurfaceFormat.Single));
+            player.LoadTexture(new Texture2D(GraphicsDevice, 100, 20, false, SurfaceFormat.Single));
             ball.LoadTexture(new Texture2D(GraphicsDevice, 10, 10, false, SurfaceFormat.Single));
+
+            blocks.ForEach(b => b.LoadTexture(new Texture2D(GraphicsDevice, 200, 20, false, SurfaceFormat.Single)));
+            blocks.ForEach(b => ball.AddSprite(b));
+            ball.AddSprite(player);
         }
 
         protected override void UnloadContent()
@@ -76,6 +63,9 @@ namespace Pong
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            gameManager.Update(gameTime); 
+
             player.Control(Keyboard.GetState());
             player.Update(gameTime);
             ball.Update(gameTime);

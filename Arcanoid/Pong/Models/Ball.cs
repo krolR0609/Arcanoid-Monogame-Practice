@@ -11,11 +11,6 @@ namespace Pong.Models
 {
     public class Ball : Sprite
     {
-        private float ballSpeed;
-        private List<Sprite> _spritesCollisions;
-
-        public bool IsPlaying = true;
-
         public Ball(float ballSpeed = 10f) : base()
         {
             this.ballSpeed = ballSpeed;
@@ -23,23 +18,56 @@ namespace Pong.Models
             Init();
         }
 
-        public void AddSprite(Sprite sprite)
-        {
-            _spritesCollisions.Add(sprite);
-        }
+        private float ballSpeed;
+        private List<Sprite> _spritesCollisions;
+
+        public bool IsPlaying = true;
+
         public override void Update(GameTime gameTime)
         {
             if (!IsPlaying)
             {
                 return;
             }
-
             CheckSpriteColissions();
             CheckScreenColissions(0, 0, Game1.ScreenWidth, Game1.ScreenHeight);
 
             this.Position += this.Velocity * this.ballSpeed;
         }
 
+        public void AddSprite(Sprite sprite)
+        {
+            _spritesCollisions.Add(sprite);
+        }
+        public void Control(KeyboardState state)
+        {
+            if (state.IsKeyDown(Keys.Space))
+            {
+                IsPlaying = !IsPlaying;
+            }
+            if (state.IsKeyDown(Keys.Up))
+            {
+                this.Velocity = new Vector2(1, -1);
+            }
+            if (state.IsKeyDown(Keys.Down))
+            {
+                this.Velocity = new Vector2(1, 1);
+            }
+            if (state.IsKeyDown(Keys.Left))
+            {
+                this.Velocity = new Vector2(1, 1);
+            }
+            if (state.IsKeyDown(Keys.Right))
+            {
+                this.Velocity = new Vector2(-1, 1);
+            }
+        }
+
+        private void Init()
+        {
+            this.Position = new Vector2(0, 0); //start postion
+            this.Velocity = new Vector2(1, 1); //start angle
+        }
         private void CheckSpriteColissions()
         {
             foreach (var sprite in _spritesCollisions)
@@ -69,7 +97,6 @@ namespace Pong.Models
                 }
             }
         }
-
         private void CheckScreenColissions(int x0, int y0, int x1, int y1)
         {
             if (Position.X >= x1)
@@ -88,36 +115,6 @@ namespace Pong.Models
             {
                 Velocity.X = -Velocity.X;
             }
-        }
-
-        public void Control(KeyboardState state)
-        {
-            if (state.IsKeyDown(Keys.Space))
-            {
-                IsPlaying = !IsPlaying;
-            }
-            if (state.IsKeyDown(Keys.Up))
-            {
-                this.Velocity = new Vector2(1, -1);
-            }
-            if (state.IsKeyDown(Keys.Down))
-            {
-                this.Velocity = new Vector2(1, 1);
-            }
-            if (state.IsKeyDown(Keys.Left))
-            {
-                this.Velocity = new Vector2(1, 1);
-            }
-            if (state.IsKeyDown(Keys.Right))
-            {
-                this.Velocity = new Vector2(-1, 1);
-            }
-        }
-
-        private void Init()
-        {
-            this.Position = new Vector2(0, 0); //start postion
-            this.Velocity = new Vector2(1, 1); //start angle
         }
     }
 }

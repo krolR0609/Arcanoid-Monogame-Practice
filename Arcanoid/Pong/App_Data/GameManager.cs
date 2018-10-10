@@ -13,28 +13,29 @@ namespace Pong.App_Data
 {
     public class GameManager
     {
-        private List<Sprite> _screenSprites;
-
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-        private ContentManager _content;
-
-
-        private GameManager(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, ContentManager contentManager)
+        public GameManager(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, ContentManager contentManager)
         {
             this._graphics = graphics;
             this._spriteBatch = spriteBatch;
             this._content = contentManager;
         }
 
+        private List<Sprite> _screenSprites;
+
+        private GraphicsDeviceManager _graphics;
+        private SpriteBatch _spriteBatch;
+        private ContentManager _content;
+
         public void Initialize()
         {
-
         }
 
         public void LoadContent()
         {
+        }
 
+        internal void Update(GameTime gameTime)
+        {
         }
     }
 }

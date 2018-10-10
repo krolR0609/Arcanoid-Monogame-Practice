@@ -8,24 +8,17 @@ namespace Pong.Models.Loaders
 {
     public class BlockLoader
     {
-        public static List<Block> CreateBlocks(int count, int diff, int width = 32, int height = 32)
+        public static List<Block> CreateBlocks(int cols,int rows, int diff, int width = 32, int height = 32)
         {
             List<Block> blocks = new List<Block>();
-            for(int i = 1; i <= count; i++)
+
+            for(int x = 1; x <= cols; x++)
             {
-                int y = 0;
-                switch(i % 2)
+                for(int y = 1; y <= rows; y++)
                 {
-                    case 0: y = 100;
-                        break;
-                    case 1: y = 150;
-                        break;
-                    case 2: y = 200;
-                        break;
-                    default: y = 250;
-                        break;
+                    blocks.Add(new Block(x * diff, y * diff, width, height));
                 }
-                blocks.Add(new Block(i * diff, y, width, height));
+                
             }
             return blocks;
         }
